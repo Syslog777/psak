@@ -13,4 +13,4 @@ PSAK must be modular and easily expandable. This is because the founding develop
 security-oriented application into it. In addition, to remain relevant means to expand and grow. PSAK will not be a project to invest in as a developer or a user if it does not evolve in a positive manner. Some tools stagnate in their development, causing users to shy away from them and developers to ignore them. Clearly, the ability to evolve is crucial to PSAK's relevancy in the years to come.
 
 
-Go to the wiki for project info --> https://github.com/Syslog777/psak.wiki.git
+Go to the wiki for project info --> https://github.com/Syslog777/psak/wiki
