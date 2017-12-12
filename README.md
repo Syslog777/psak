@@ -25,7 +25,7 @@ The majority of revisions will involve simple code such as updating shebangs and
   - [Tplmap][tplMap]: exploit Code Injection and Server-Side Template Injection vulnerabilities
   - [WAFW00F][waf]: identifies and fingerprints Web Application Firewall (WAF) products.
   - [Finmap][finmap]: find, prepare, audit, exploit and even google automatically for local and remote file inclusion bugs within webapps in python
- 
+ - [NoSQLMap][NoSql]: audit as well as automate injection attacks while exploiting default configuration weaknesses in NoSQL databases and web applications using NoSQL
 
    [waf]: <https://github.com/EnableSecurity/wafw00f>
    [tplMap]: <https://github.com/epinna/tplmap>
@@ -33,6 +33,6 @@ The majority of revisions will involve simple code such as updating shebangs and
    [sshMitm]: <https://github.com/jtesta/ssh-mitm>
    [tlsprober]: <https://github.com/WestpointLtd/tls_prober>
    [finmap]: <https://github.com/kurobeats/fimap>
-   
+   [NoSql]: <https://github.com/codingo/NoSQLMap>
    
    
