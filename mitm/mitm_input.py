@@ -1,8 +1,9 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import sys
 
 
+# TODO: add pre-execution arg options
 def interrupt():
     print("\n[*] User requested shutdown")
     print("Exiting....")

