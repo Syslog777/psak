@@ -30,6 +30,7 @@
 """
 
 import argparse
+import errno
 import sys
 
 
@@ -42,13 +43,13 @@ class Psak:
         names as valid args within this class. Additional args
         will be added to the parser object in whichever module is
         loaded."""
-        self.usage = ("prog <module_name> [module-options] \n"
-                      "Ex. python3 psak -mitm_core ")
+        self.usage = ("python3 %(prog)s <module_name> [module-args] \n"
+                      "Ex. python3 %(prog)s -mitm 192.168.2.2 example.com")
         self.description = "PSAK, the Pentester's Swiss Army Knife"
         self.parser = argparse.ArgumentParser(description=self.description,
                                               usage=self.usage)
         self.parser.add_argument('--mitm',
-                                 help="Usage: python3 psak --mitm_core"
+                                 help="Usage: python3 psak --mitm"
                                       " [victim-ip] [gate-ip] [optional_attack]",
                                  required=False)
         self.parser.add_argument('--slowloris',
@@ -65,13 +66,26 @@ class Psak:
         sys.exit(0)
 
     def psak_error_shutdown(self):
-        print("[*] Exiting, ")
+        print("\nExiting, an error occured")
+        sys.exc_info()
+        sys.exit(0)
 
     def module_loader(self):
-        None
+        try:
+            if self.args.mitm:
+
+        except IOError as e:
+            if (e[0] == errno.EPERM):
+                print() >> sys.stderr, "\nYou need root permissions to do this, exiting..."
+                sys.exit(1)
 
     def main(self):
-        None
+        try:
+            None
+        except IOError as e:
+            if (e[0] == errno.EPERM):
+                print >> sys.stderr, "\nYou need root permissions to do this, exiting..."
+                sys.exit(1)
 
 
 if __name__ == '__main__':

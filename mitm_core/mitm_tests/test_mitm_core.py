@@ -32,10 +32,8 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 
 import unittest.TestCase
 
-from mitm_core import mitm_core
-
 
 class TestMitmCore(unittest.TestCase):
 
     def test_main(self):
-        mitm = mitm_core.Mitm()
+        mitm = mitm.Mitm()

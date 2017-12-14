@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/psak.iml" filepath="$PROJECT_DIR$/.idea/psak.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../temp-psak/.idea/psak-project.iml" filepath="$PROJECT_DIR$/../temp-psak/.idea/psak-project.iml" />
     </modules>
   </component>
 </project>

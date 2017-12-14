@@ -34,16 +34,17 @@ class MitmArgs:
 
     def __init__(self, parser):
         self.parser = parser
-        self.parser.add_argument('-iface', '--interface',
+        self.parser.add_argument('-iface', '--interface', required=True,
                                  help="Interface to use for network activity")
-        self.parser.add_argument('-vIP', '--victim-ip',
+        self.parser.add_argument('-vIP', '--victim-ip', required=True,
                                  help="IP of the victim")
-        self.parser.add_argument('-gIP', '--gate_ip',
+        self.parser.add_argument('-gIP', '--gate_ip', required=True,
                                  help="IP of the gate/ node that the victim"
                                       "is connecting to")
-        self.parser.add_argument('-gPN', '--gate_port_number',
+        self.parser.add_argument('-gPN', '--gate_port_number', required=True,
                                  help="Port number of the gate to connect to",
                                  type=int)
+        self.args = self.parser.parse_args()
 
     def get_interface(self):
         if not self.parser.interface:
