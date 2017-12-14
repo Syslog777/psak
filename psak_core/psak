@@ -36,14 +36,26 @@ import sys
 class Psak:
 
     def __init__(self):
-        self.usage = 'python3 %prog <module_name> [module-options] \n' \
-                     'Ex. python3 psak -mitm_core '
+        """
+        The Psak class only needs the name of the module.
+        Therefore, the self.parser field will only have module
+        names as valid args within this class. Additional args
+        will be added to the parser object in whichever module is
+        loaded."""
+        self.usage = ("prog <module_name> [module-options] \n"
+                      "Ex. python3 psak -mitm_core ")
         self.description = "PSAK, the Pentester's Swiss Army Knife"
         self.parser = argparse.ArgumentParser(description=self.description,
                                               usage=self.usage)
-        self.parser.add_argument('--mitm_core',
-                                 help="Usage: python psak --mitm_core victim_ip gate_ip [optional_attack] ")
+        self.parser.add_argument('--mitm',
+                                 help="Usage: python3 psak --mitm_core"
+                                      " [victim-ip] [gate-ip] [optional_attack]",
+                                 required=False)
+        self.parser.add_argument('--slowloris',
+                                 help="Usage: python3 slowloris [hostname]",
+                                 required=False)
         self.args = self.parser.parse_args()
+
         if len(sys.argv) <= 1:
             self.parser.print_help()
         sys.exit(1)
@@ -56,9 +68,10 @@ class Psak:
         print("[*] Exiting, ")
 
     def module_loader(self):
-        if self.args.mitm:
+        None
 
     def main(self):
+        None
 
 
 if __name__ == '__main__':

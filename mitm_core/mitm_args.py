@@ -29,42 +29,43 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-import sys
 
+class MitmArgs:
 
-def interrupt():
-    print("\n[*] User requested shutdown")
-    print("Exiting....")
-    sys.exit(1)
+    def __init__(self, parser):
+        self.parser = parser
+        self.parser.add_argument('-iface', '--interface',
+                                 help="Interface to use for network activity")
+        self.parser.add_argument('-vIP', '--victim-ip',
+                                 help="IP of the victim")
+        self.parser.add_argument('-gIP', '--gate_ip',
+                                 help="IP of the gate/ node that the victim"
+                                      "is connecting to")
+        self.parser.add_argument('-gPN', '--gate_port_number',
+                                 help="Port number of the gate to connect to",
+                                 type=int)
 
+    def get_interface(self):
+        if not self.parser.interface:
+            return None
+        return self.parser.interface
 
-def get_interface():
-    try:
-        interface = input("[*] Enter desired interface: ")
-        return interface
-    except KeyboardInterrupt:
-        interrupt()
+    def get_victim_ip(self):
+        if not self.parser.victim_ip:
+            return None
+        return self.parser.victim_ip
 
+    def get_gate_ip(self):
+        if not self.parser.gate_ip:
+            return None
+        return self.parser.gate_ip
 
-def get_victimIP():
-    try:
-        victimIP = input("[*] Enter victim IP: ")
-        return victimIP
-    except KeyboardInterrupt:
-        interrupt()
+    def get_gate_port_number(self):
+        if not self.parser.gate_port_number:
+            return None
+        return self.parser.gate_port_number
 
-
-def get_gateIP():
-    try:
-        gateIP = input("[*] Enter router IP: ")
-        return gateIP
-    except KeyboardInterrupt:
-        interrupt()
-
-
-def get_gate_port_number():
-    try:
-        portNum = input("[*] Enter gate port number: ")
-        return portNum
-    except KeyboardInterrupt:
-        interrupt()
+    def get_victim_port_number(self):
+        if not self.parser.victim_port_number:
+            return None
+        return self.parser.victim_port_number

@@ -31,22 +31,19 @@
 
 from scapy.all import *
 
-from mitm_core import mitm_input
+from mitm_core import mitm_args
 
 
 # TODO: refactor to recieve unique module input args
 class Mitm:
 
     def __init__(self):
-        try:
-            self.enable_forwarding()
-            self.interface = mitm_input.get_interface()
-            self.victim_ip = mitm_input.get_victimIP()
-            self.gate_ip = mitm_input.get_gateIP()
-            self.victim_mac = self.get_mac(self.victim_ip)
-            self.gate_mac = self.get_mac(self.gate_ip)
-        except KeyboardInterrupt:
-            self.mitm_shutdown()
+        self.enable_forwarding()
+        self.interface = mitm_args.get_interface()
+        self.victim_ip = mitm_args.get_victimIP()
+        self.gate_ip = mitm_args.get_gateIP()
+        self.victim_mac = self.get_mac(self.victim_ip)
+        self.gate_mac = self.get_mac(self.gate_ip)
 
     def enable_forwarding(self):
         print("\n[*] Enabling IP forwarding....\n")
