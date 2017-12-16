@@ -42,49 +42,55 @@ class Psak:
         Therefore, the self.parser field will only have module
         names as valid args within this class. Additional args
         will be added to the parser object in whichever module is
-        loaded."""
-        self.usage = ("python3 %(prog)s <module_name> [module-args] \n"
-                      "Ex. python3 %(prog)s -mitm 192.168.2.2 example.com")
+        loaded.
+        """
+        self.usage = ("%(prog)s --module_name <module-args> \n"
+                      "Ex. %(prog)s -mitm 180 -vIP 192.168.2.2 -gIP example.com "
+                      "-iface wlan1")
         self.description = "PSAK, the Pentester's Swiss Army Knife"
         self.parser = argparse.ArgumentParser(description=self.description,
                                               usage=self.usage)
         self.parser.add_argument('--mitm',
-                                 help="Usage: python3 psak --mitm"
-                                      " [victim-ip] [gate-ip] [optional_attack]",
-                                 required=False)
+                                 help=("Argments:"
+                                       "--mitm: module to load and total "
+                                       "runtime in seconds\n"
+                                       "-iface: Interface to use for network"
+                                       " activity\n"
+                                       "-vIP: IP of the victim\n"
+                                       "-gIP: IP of the gate/node that the"
+                                       "\n victim"
+                                       "-gPN: Port number of the gate to "
+                                       "connect to\n"
+                                       "Usage: psak --mitm runtime-in-seconds"
+                                       " [victim-ip] [gate-ip] "
+                                       "[optional-attack-type]"),
+                                 required=False, type=int)
         self.parser.add_argument('--slowloris',
-                                 help="Usage: python3 slowloris [hostname]",
+                                 help="Usage: %(prog)s slowloris -help",
                                  required=False)
-        self.args = self.parser.parse_args()
+        self.parser.add_argument('-V', '--verbose', action="store_true",
+                                 help="Increases logging", required=False)
 
         if len(sys.argv) <= 1:
             self.parser.print_help()
-        sys.exit(1)
+            sys.exit(1)
 
     def psak_normal_shutdown(self):
         print("[*] Exiting...")
         sys.exit(0)
 
-    def psak_error_shutdown(self):
-        print("\nExiting, an error occured")
-        sys.exc_info()
-        sys.exit(0)
-
-    def module_loader(self):
-        try:
-            if self.args.mitm:
-
-        except IOError as e:
-            if (e[0] == errno.EPERM):
-                print() >> sys.stderr, "\nYou need root permissions to do this, exiting..."
-                sys.exit(1)
-
     def main(self):
         try:
-            None
+            if sys.argv[1] == '--mitm':
+                from mitm_core.mitm_args import MitmArgs
+                from mitm_core.mitm import Mitm
+                mitm_args = MitmArgs(self.parser)
+                mitm = Mitm(mitm_args)
+                mitm.connect(runtime=mitm_args.get_runtime())
         except IOError as e:
-            if (e[0] == errno.EPERM):
-                print >> sys.stderr, "\nYou need root permissions to do this, exiting..."
+            if e[0] == errno.EPERM:
+                print(sys.stderr, ("\nYou need root permissions to do this,"
+                                   " exiting..."))
                 sys.exit(1)
 
 
