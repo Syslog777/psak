@@ -82,8 +82,8 @@ class Psak:
     def main(self):
         try:
             if sys.argv[1] == '--mitm':
-                from mitm_core.mitm_args import MitmArgs
-                from mitm_core.mitm import Mitm
+                from modules.mitm_core.mitm_args import MitmArgs
+                from modules.mitm_core.mitm import Mitm
                 mitm_args = MitmArgs(self.parser)
                 mitm = Mitm(mitm_args)
                 mitm.connect(runtime=mitm_args.get_runtime())
