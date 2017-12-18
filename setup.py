@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
  Copyright (c) 2017, Syslog777
  
@@ -28,3 +27,16 @@
  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
+from setuptools import setup
+
+setup(
+    name='PSAK',
+    version='0.5',
+    packages=['PSAK.py.psak_core', 'PSAK.py.psak_core.modules', 'PSAK.py.psak_core.modules.mitm_core',
+              'PSAK.py.psak_core.modules.mitm_tests', 'PSAK.py.psak_core.modules.mitm_exceptions', 'PSAK.py.psak_exceptions'],
+    url='',
+    license='BSD 3',
+    author='Syslog777',
+    author_email='thejavapi26@gmail.com',
+    description='Pentester\'s Swiff Army Knife'
+)

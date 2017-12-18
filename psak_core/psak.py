@@ -61,7 +61,7 @@ class Psak:
                                        "\n victim"
                                        "-gPN: Port number of the gate to "
                                        "connect to\n"
-                                       "Usage: psak --mitm runtime-in-seconds"
+                                       "Usage: PSAK.py --mitm runtime-in-seconds"
                                        " [victim-ip] [gate-ip] "
                                        "[optional-attack-type]"),
                                  required=False, type=int)

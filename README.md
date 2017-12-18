@@ -12,6 +12,17 @@ PSAK must be developed with inexperience in mind while maintaining functional dy
 PSAK must be modular and easily expandable. This is because the founding developers cannot possibly integrate every single Linux-based 
 security-oriented application into it. In addition, to remain relevant means to expand and grow. PSAK will not be a project to invest in as a developer or a user if it does not evolve in a positive manner. Some tools stagnate in their development, causing users to shy away from them and developers to ignore them. Clearly, the ability to evolve is crucial to PSAK's relevancy in the years to come.
 
+
+### Installation Instructions
+Type the following into your terminal as user root:
+```pip3 install psak```
+If you are a sudo user, then type the following instead:
+```sudo pip3 install psak```
+Please note that installation success depends on many factors, including but not limited to:
+- Python version
+- Pip version
+- Operating System
+
 ### PSAK Framework
 PSAK is simple to intergrate with, provided a intermediate
 understanding of software develpment and Python 3.
@@ -22,5 +33,6 @@ psak.psak_core  | holds all of PSAK's functional modules and packages
 psak.psak_exceptions  | houses PSAK's exception types while importing individual exception modules from the psak_core.modules package
 psak.psak_core.modules  | holds all available integrated exploit modules
 psak.README.md | gives an overvie of PSAK and links to the PSAK wiki
-
+  
+  
 Go to the wiki for project info --> https://github.com/Syslog777/psak/wiki
