@@ -47,7 +47,7 @@ class Psak:
         self.usage = ("%(prog)s --module_name <module-args> \n"
                       "Ex. %(prog)s -mitm 180 -vIP 192.168.2.2 -gIP example.com "
                       "-iface wlan1")
-        self.description = "PSAK, the Pentester's Swiss Army Knife"
+        self.description = "psak_project, the Pentester's Swiss Army Knife"
         self.parser = argparse.ArgumentParser(description=self.description,
                                               usage=self.usage)
         self.parser.add_argument('--mitm',
@@ -61,7 +61,7 @@ class Psak:
                                        "\n victim"
                                        "-gPN: Port number of the gate to "
                                        "connect to\n"
-                                       "Usage: PSAK.py --mitm runtime-in-seconds"
+                                       "Usage: psak_project.py --mitm runtime-in-seconds"
                                        " [victim-ip] [gate-ip] "
                                        "[optional-attack-type]"),
                                  required=False, type=int)
@@ -82,8 +82,8 @@ class Psak:
     def main(self):
         try:
             if sys.argv[1] == '--mitm':
-                from modules.mitm_core.mitm_args import MitmArgs
-                from modules.mitm_core.mitm import Mitm
+                from psak_project.psak_core.modules.mitm_core.mitm_args import MitmArgs
+                from psak_project.psak_core.modules.mitm_core.mitm import Mitm
                 mitm_args = MitmArgs(self.parser)
                 mitm = Mitm(mitm_args)
                 mitm.connect(runtime=mitm_args.get_runtime())

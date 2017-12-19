@@ -9,7 +9,6 @@ apt-get install pip
 apt-get install pip3
 pip3 install --upgrade pip
 pip3 install setuptools
-pip install ipython
 pip3 install ipython
 pip3 install graphviz
 pip3 install cryptography
@@ -21,4 +20,5 @@ pip3 install latex
 apt-get install tcpdump python3-crypto ipython3
 apt-get install python3-tk
 pip3 install netaddr
+pip3 install psak
 apt autoremove
