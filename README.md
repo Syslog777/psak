@@ -14,14 +14,30 @@ security-oriented application into it. In addition, to remain relevant means to 
 
 
 ### Installation Instructions
-Type the following into your terminal as user root:
-```pip3 install psak```.
-If you are a sudo user, then type the following instead:
-```sudo pip3 install psak```.
-Please note that installation success depends on many factors, including but not limited to:
-- Python version
-- Pip version
-- Operating System
+Copy and paste the following into your terminal as user root:
+```
+apt-get update
+apt-get upgrade
+apt-get install python3
+apt-get install python3-pip
+apt-get install pip
+apt-get install pip3
+pip3 install --upgrade pip
+pip3 install setuptools
+pip3 install ipython
+pip3 install graphviz
+pip3 install cryptography
+pip3 install scapy-python3
+pip3 install matplotlib
+pip3 install networkx
+pip3 install pyx
+pip3 install latex
+apt-get install tcpdump python3-crypto ipython3
+apt-get install python3-tk
+pip3 install netaddr
+pip3 install psak
+apt autoremove
+```
 
 ### PSAK Framework
 PSAK is simple to integrate with, provided a intermediate
