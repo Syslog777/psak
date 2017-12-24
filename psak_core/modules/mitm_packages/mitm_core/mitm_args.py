@@ -44,7 +44,7 @@ class MitmArgs:
     def __init__(self, parser):
         parser.add_argument('-iface', '--interface', dest="interface",
                             required=True, type=str,
-                            help="help=interface to use for network activity")
+                            help="interface to use for network activity")
 
         parser.add_argument('-vIP', '--victim-ip', help="IP of the victim",
                             dest="victim_ip", required=True, type=str, default="127.0.0.1")

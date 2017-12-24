@@ -5,7 +5,7 @@
 
 
 ### Introduction
-PSAK is a project that targets a very specific audience - Kali Linux users who are interested in pen-testing. While the target OS is Kali Linux, other Linux OS users are welcome to use our software. However, due to the myriad of bugs caused by "other" Linux operating systems, PSAK developers will only support Kali Linux distributions.
+PSAK is a project that targets a very specific audience
 
 PSAK must be developed with inexperience in mind while maintaining functional dynamics. In other words, it should be operable by a "script kiddie" with strong reading comprehension, while a seasoned pen-tester should not become frustrated with overly limited options. However, it is not meant to fully replace original tools such as "nmap" or "metasploit". Such a project is beyond the scope of the tasks at hand.
 
@@ -15,24 +15,30 @@ security-oriented application into it. In addition, to remain relevant means to 
 
 ### Installation Instructions
 Type the following into your terminal as user root:
-```pip3 install psak```
+```pip3 install psak```.
 If you are a sudo user, then type the following instead:
-```sudo pip3 install psak```
+```sudo pip3 install psak```.
 Please note that installation success depends on many factors, including but not limited to:
 - Python version
 - Pip version
 - Operating System
 
 ### PSAK Framework
-PSAK is simple to intergrate with, provided a intermediate
-understanding of software develpment and Python 3.
+PSAK is simple to integrate with, provided a intermediate
+understanding of software development and Python 3.
 
 PSAK Package  | Description
 ------------- | -------------
-psak.psak_core  | holds all of PSAK's functional modules and packages
-psak.psak_exceptions  | houses PSAK's exception types while importing individual exception modules from the psak_core.modules package
-psak.psak_core.modules  | holds all available integrated exploit modules
-psak.README.md | gives an overvie of PSAK and links to the PSAK wiki
-  
-  
-Go to the wiki for project info --> https://github.com/Syslog777/psak/wiki
+psak_project.psak_core  | holds all of psak's source code except for psak.py
+psak_project.psak_exceptions  | holds psak's exception types while importing individual exception modules from the psak_core.modules package
+psak_project.psak_core.modules  | holds all available integrated exploit modules
+psak_project.psak_core.psak.py | psak python3 driver
+
+Required package  |  Description
+-------------|------------
+psak_project.psak_core.modules.new_package.new_module_core | holds all of your main functional source code
+psak_project.psak_core.modules.new_package.new_package_exceptions | holds your exceptions
+psak_project.psak_core.modules.new_package.new_package_tests | holds all of your tests
+
+
+Go to the wiki for additional project info --> https://github.com/Syslog777/psak/wiki
