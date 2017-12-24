@@ -51,7 +51,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 """
-This module should only be used from the psak class
+This module should only be used from the psak.py class
 """
 # !/usr/bin/python
 import logging

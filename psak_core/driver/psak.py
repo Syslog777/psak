@@ -41,7 +41,7 @@ will be added to the parser object in whichever module is
 loaded.
 """
 usage = ("%(prog)s --module_name ")
-description = "psak, the Pentester's Swiss Army Knife"
+description = "psak.py, the Pentester's Swiss Army Knife"
 parser = argparse.ArgumentParser(description=description,
                                  usage=usage)
 parser.add_argument('--mitm',
