@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
  Copyright (c) 2017, Syslog777
  
@@ -28,3 +27,20 @@
  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
+from setuptools import find_packages
+from setuptools import setup
+
+setup(
+    name='psak',
+    version='0.5.2.1',
+    packages=find_packages('psak_core'),  # include all packages under psak_core
+    package_dir={'': 'psak_core'},  # tell distutils packages are under src
+    entry_points={"console_scripts": ["psak=driver.psak:main"]},
+    include_package_data=True,  # include everything in source control,
+    url='https://github.com/Syslog777/psak',
+    license='BSD 3',
+    author='Syslog777',
+    author_email='thejavapi26@gmail.com',
+    description='The Pentester\'s Swiss Army Knife '
+)
+print(find_packages())

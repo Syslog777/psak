@@ -29,44 +29,54 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
+"""
+All arguments:
+--mitm: total runtime in seconds
+-iface: Interface to use for network activity
+-vIP: IP of the victim
+-gIP: IP of the gate/ node that the victim
+-gPN: Port number of the gate to connect to
+"""
+
 
 class MitmArgs:
 
     def __init__(self, parser):
-        self.parser = parser
-        self.parser.add_argument('-iface', '--interface', required=True,
-                                 help="Interface to use for network activity")
-        self.parser.add_argument('-vIP', '--victim-ip', required=True,
-                                 help="IP of the victim")
-        self.parser.add_argument('-gIP', '--gate_ip', required=True,
-                                 help="IP of the gate/ node that the victim"
-                                      "is connecting to")
-        self.parser.add_argument('-gPN', '--gate_port_number', required=True,
-                                 help="Port number of the gate to connect to",
-                                 type=int)
-        self.args = self.parser.parse_args()
+        parser.add_argument('-iface', '--interface', dest="interface",
+                            required=True, type=str,
+                            help="interface to use for network activity")
+
+        parser.add_argument('-vIP', '--victim-ip', help="IP of the victim",
+                            dest="victim_ip", required=True, type=str, default="127.0.0.1")
+
+        parser.add_argument('-gIP', '--gate-ip', dest="gate_ip", required=True, type=str,
+                            default="127.0.0.1",
+                            help="IP of the gate/ node that the victim is connecting to")
+
+        parser.add_argument('-gPN', '--gate_port_number',
+                            help="Port number of the gate to connect to", dest="gate_port_number",
+                            required=False, type=int)
+        self.args = parser.parse_args()
+        self.interface = self.args.interface
+        self.victim_ip = self.args.victim_ip
+        self.gate_ip = self.args.gate_ip
+        self.gate_port_number = self.args.gate_port_number
+        # self.victim_port_number = self.args.victim_port_number
 
     def get_interface(self):
-        if not self.parser.interface:
-            return None
-        return self.parser.interface
+        return self.interface
 
     def get_victim_ip(self):
-        if not self.parser.victim_ip:
-            return None
-        return self.parser.victim_ip
+        return self.victim_ip
 
     def get_gate_ip(self):
-        if not self.parser.gate_ip:
-            return None
-        return self.parser.gate_ip
+        return self.gate_ip
 
     def get_gate_port_number(self):
-        if not self.parser.gate_port_number:
-            return None
-        return self.parser.gate_port_number
+        return self.gate_port_number
 
     def get_victim_port_number(self):
-        if not self.parser.victim_port_number:
-            return None
-        return self.parser.victim_port_number
+        return self.victim_port_number
+
+    def get_runtime(self):
+        return self.args.mitm
