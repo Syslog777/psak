@@ -57,6 +57,9 @@ if len(sys.argv) <= 1:
     parser.print_help()
     sys.exit(1)
 
+if sys.argv[1] == ('-h') or sys.argv[1] == ('--help'):
+    parser.print_help()
+    sys.exit(0)
 
 def psak_normal_shutdown(self):
     print("[*] Exiting...")

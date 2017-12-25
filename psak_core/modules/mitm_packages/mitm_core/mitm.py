@@ -30,8 +30,6 @@
 """
 from scapy.all import *
 
-# from scapy import sendrecv for sendrevc.sendp()
-# from scapy.layers.l2 import ARP
 """
 Argments:
 --mitm: module to load and total runtime in seconds

@@ -39,22 +39,5 @@ pip3 install psak
 apt autoremove
 ```
 
-### PSAK Framework
-PSAK is simple to integrate with, provided a intermediate
-understanding of software development and Python 3.
-
-PSAK Package  | Description
-------------- | -------------
-psak_project.psak_core  | holds all of psak's source code except for psak.py
-psak_project.psak_exceptions  | holds psak's exception types while importing individual exception modules from the psak_core.modules package
-psak_project.psak_core.modules  | holds all available integrated exploit modules
-psak_project.psak_core.psak.py | psak python3 driver
-
-Required package  |  Description
--------------|------------
-psak_project.psak_core.modules.new_package.new_module_core | holds all of your main functional source code
-psak_project.psak_core.modules.new_package.new_package_exceptions | holds your exceptions
-psak_project.psak_core.modules.new_package.new_package_tests | holds all of your tests
-
 
 Go to the wiki for additional project info --> https://github.com/Syslog777/psak/wiki
