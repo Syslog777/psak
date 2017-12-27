@@ -32,7 +32,7 @@ from setuptools import setup
 
 setup(
     name='psak',
-    version='0.5.2.1',
+    version='0.5.2.2',
     packages=find_packages('psak_core'),  # include all packages under psak_core
     package_dir={'': 'psak_core'},  # tell distutils packages are under src
     entry_points={"console_scripts": ["psak=driver.psak:main"]},
