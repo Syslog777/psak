@@ -32,27 +32,23 @@
 import argparse
 import errno
 import sys
-
 """
-The Psak class only needs the name of the module.
-Therefore, the self.parser field will only have module
-names as valid args within this class. Additional args
-will be added to the parser object in whichever module is
-loaded.
+Each parser variable module argument is reusable.
 """
+# TODO: finish cleaning up the --help output
 usage = ("%(prog)s --module_name ")
-description = "psak.py, the Pentester's Swiss Army Knife"
+description = "%(prog)s, the Pentester's Swiss Army Knife"
 parser = argparse.ArgumentParser(description=description,
                                  usage=usage)
 parser.add_argument('--mitm',
-                    help=("Usage: --mitm runtime-in-seconds"
-                          " [victim-ip] [gate-ip] "
-                          "[optional-attack-type]"),
-                    required=False, type=int)
-parser.add_argument('--slowloris',
-                    help="Usage: %(prog)s --slowloris ",
+                    help="Usage: %(prog)s --mitm runtime -vIP 192.168.43.2"
+                         " -gIP 192.168.43.1 -iface wlan1",
                     required=False, nargs="?")
-
+parser.add_argument('--slowloris',
+                    help="Usage: %(prog)s --slowloris host",
+                    required=False, nargs="?")
+parser.add_argument('--badpacket', help='Usage: %(prog)s --badpacket host',
+                    nargs="?")
 if len(sys.argv) <= 1:
     parser.print_help()
     sys.exit(1)
@@ -61,19 +57,12 @@ if sys.argv[1] == ('-h') or sys.argv[1] == ('--help'):
     parser.print_help()
     sys.exit(0)
 
-def psak_normal_shutdown(self):
-    print("[*] Exiting...")
-    sys.exit(0)
-
-
 def main():
     try:
         if sys.argv[1] == '--mitm':
-            from modules.mitm_packages.mitm_core.mitm_args import MitmArgs
             from modules.mitm_packages.mitm_core.mitm import Mitm
-            mitm_args = MitmArgs(parser)
-            mitm = Mitm(mitm_args)
-            mitm.connect(runtime=mitm_args.get_runtime())
+            mitm = Mitm(parser)
+            mitm.connect()
         if sys.argv[1] == '--slowloris':
             from modules.slowloris_packages.slowloris_core.slowloris import SlowLoris
             slowloris = SlowLoris(parser)

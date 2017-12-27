@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
  Copyright (c) 2017, Syslog777
  
@@ -27,3 +28,8 @@
  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
+
+
+class DHCPStarvation:
+    def __init__(self, parser):
+        None
