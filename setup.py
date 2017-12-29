@@ -55,7 +55,7 @@ mypkg=psak_core
 """
 setup(
     name='psak',
-    version='0.5.9.3',
+    version='0.5.9.4',
     packages=find_packages('psak_src'),  # include all packages under psak_core
     package_dir={'': 'psak_src'},  # tell distutils packages are under psak_core
     entry_points={"console_scripts": ["psak=psak_src.psak:main"]},
