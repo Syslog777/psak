@@ -55,9 +55,9 @@ mypkg=psak_core
 """
 setup(
     name='psak',
-    version='0.5.9.4',
-    packages=find_packages('psak_src'),  # include all packages under psak_core
-    package_dir={'': 'psak_src'},  # tell distutils packages are under psak_core
+    version='0.5.9.8',
+    packages=find_packages('psak_src'),  # include all packages under psak_src
+    package_dir={'': 'psak_src'},  # tell distutils packages are under psak_src
     entry_points={"console_scripts": ["psak=psak_src.psak:main"]},
     include_package_data=True,  # include everything in source control,
     url='https://github.com/Syslog777/psak',

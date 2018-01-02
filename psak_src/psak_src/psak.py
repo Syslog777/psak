@@ -47,7 +47,7 @@ to import
 
 """
 
-usage = ("%(prog)s --module_name ")
+usage = ("%(prog)s --module_name [module args]")
 description = "%(prog)s, the Pentester's Swiss Army Knife"
 parser = argparse.ArgumentParser(description=description,
                                  usage=usage)
@@ -55,13 +55,13 @@ parser = argparse.ArgumentParser(description=description,
 
 def add_args():
     parser.add_argument('--mitm',
-                        help="Usage: %(prog)s --mitm runtime",
-                        required=False, nargs="?")
+                        help="Usage: %(prog)s --mitm runtime <options>",
+                        required=False, nargs="?", type=int)
     parser.add_argument('--slowloris',
-                        help="Usage: %(prog)s --slowloris host",
-                        required=False, nargs="?")
-    parser.add_argument('--badpacket', help='Usage: %(prog)s --badpacket host',
-                        nargs="?")
+                        help="Usage: %(prog)s --slowloris host <options>",
+                        required=False, nargs="?", type=str)
+    parser.add_argument('--badpacket', help='Usage: %(prog)s --badpacket host <options>',
+                        nargs="?", type=str)
 
 
 if len(sys.argv) <= 1:
@@ -81,21 +81,32 @@ def main():
             parser.add_argument('--mitm',
                                 help="Usage: %(prog)s --mitm runtime -vIP 192.168.43.2"
                                      " -gIP 192.168.43.1 -iface wlan1",
-                                required=False, nargs="?")
-            from psak_src.exploit_modules.mitm_exploit.mitm_core.mitm import Mitm
+                                required=False, nargs="?", type=int)
+            try:
+                from exploit_modules.mitm import Mitm
+                # First try to import from local dev project
+            except ImportError:
+                # If that does not work, import from global psak lib
+                from psak_src.exploit_modules.mitm import Mitm
             mitm = Mitm(parser)
             mitm.connect()
         if sys.argv[1] == '--slowloris':
             parser.add_argument('--slowloris',
                                 help="Usage: %(prog)s --slowloris host",
                                 required=False, nargs="?")
-            from psak_src.exploit_modules.server_exploits.slowloris_exploit.slowloris import SlowLoris
+            try:
+                from exploit_modules.slowloris import SlowLoris
+            except ImportError:
+                from psak_src.exploit_modules.slowloris import SlowLoris
             slowloris = SlowLoris(parser)
             slowloris.poisen()
-        if sys.argv[1] == '--bad-packet':
-            parser.add_argument('--bad-packet', help='Usage: %(prog)s --badpacket host',
+        if sys.argv[1] == '--badpacket':
+            parser.add_argument('--badpacket', help='Usage: %(prog)s --badpacket host',
                                 nargs="?")
-            from psak_src.exploit_modules.packet_attacks.bad_packet import BadPacket
+            try:
+                from exploit_modules.packet_attacks.badpacket import BadPacket
+            except ImportError:
+                from psak_src.exploit_modules.packet_attacks.badpacket import BadPacket
             bad_packet = BadPacket(parser)
             bad_packet.send()
     except IOError as e:
