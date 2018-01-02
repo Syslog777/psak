@@ -5,7 +5,7 @@
 
 
 ### Introduction
-PSAK is a project that targets a very specific audience
+PSAK is a project that targets a very specific audience.
 
 PSAK must be developed with inexperience in mind while maintaining functional dynamics. In other words, it should be operable by a "script kiddie" with strong reading comprehension, while a seasoned pen-tester should not become frustrated with overly limited options. However, it is not meant to fully replace original tools such as "nmap" or "metasploit". Such a project is beyond the scope of the tasks at hand.
 
