@@ -46,7 +46,7 @@ on it, the interpreter will import that module, not the one you are attempting
 to import
 
 """
-
+# TODO Finish pingofdeath, synack_flood, refactoring badpacket
 usage = ("%(prog)s --module_name [module args]")
 description = "%(prog)s, the Pentester's Swiss Army Knife"
 parser = argparse.ArgumentParser(description=description,
@@ -62,6 +62,7 @@ def add_args():
                         required=False, nargs="?", type=str)
     parser.add_argument('--badpacket', help='Usage: %(prog)s --badpacket host <options>',
                         nargs="?", type=str)
+    parser.add_argument('--synack', help="Usage: %(prog)s --synack <options>", nargs="?")
 
 
 if len(sys.argv) <= 1:
@@ -92,8 +93,8 @@ def main():
             mitm.connect()
         if sys.argv[1] == '--slowloris':
             parser.add_argument('--slowloris',
-                                help="Usage: %(prog)s --slowloris host",
-                                required=False, nargs="?")
+                                help='Usage: %(prog)s --slowloris host',
+                                required=False, nargs='?')
             try:
                 from exploit_modules.slowloris import SlowLoris
             except ImportError:
@@ -109,6 +110,20 @@ def main():
                 from psak_src.exploit_modules.packet_attacks.badpacket import BadPacket
             bad_packet = BadPacket(parser)
             bad_packet.send()
+        if sys.argv[1] == '--synack':
+            parser.add_argument('--synack', help='Usage %(prog)s --synack ipaddress', nargs="?")
+            try:
+                from exploit_modules.synack_flood import SynAckFlood
+                synack = SynAckFlood(parser)
+                synack.flood()
+            except ImportError:
+                from psak_src.exploit_modules.synack_flood import SynAckFlood
+                synack = SynAckFlood(parser)
+                synack.flood()
+        else:
+            add_args()
+            parser.print_help()
+            sys.exit(1)
     except IOError as e:
         if e[0] == errno.EPERM:
             print(sys.stderr, ("\nYou need root permissions to do this,"

@@ -17,6 +17,7 @@ pip3 install matplotlib
 pip3 install networkx
 pip3 install pyx
 pip3 install latex
+pip3 install docopt
 apt-get install tcpdump python3-crypto ipython3
 apt-get install python3-tk
 pip3 install netaddr
