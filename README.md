@@ -87,6 +87,8 @@ The majority of revisions will involve simple code such as updating shebangs and
  - [DHCP-Starvation][DHCP-starvation]: DHCP starvation attack 
  - [Scapy-Attacks][Scapy-Attacks]: scapy based attack research (Intergration in progress)
  - [Ddos database][ddosd]: Ddos knowledge database ((Intergration in progress))
+- [James' Security Blog][jsb]: A comprehensive list of attacks and their implementation
+
 
 # List of types of attacks to add
 `
@@ -115,5 +117,6 @@ Sync flood/ARP attack/Stealth Finish/ ICMP Ping flood/ UDP flood/ UDP Scan/ TCP 
    [slowloris]: <https://github.com/gkbrk/slowloris>
    [DHCP-starvation]: <http://cabeggar.github.io/2016/02/21/DHCP-starvation-with-ScaPy/>
    [Scapy-Attacks]: <http://www.secdev.org/conf/scapy_csw05.pdf>
+[jsb]: <http://jamesdotcom.com/?p=264>
 
    
