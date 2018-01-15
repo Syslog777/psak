@@ -9,6 +9,10 @@
  simpler. The second objective is support automated pentesting.
  2. This project can be expanded by writing modules and submitting
   pull requests
+  
+### Limitations
+- In general, attacks using psak are only effective if the attacker
+is on the same network as the victim
  
  ### PSAK Framework
 PSAK is simple to intergrate with, provided a intermediate

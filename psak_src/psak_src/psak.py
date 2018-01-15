@@ -63,7 +63,7 @@ def add_args():
     parser.add_argument('--badpacket', help='Usage: %(prog)s --badpacket host <options>',
                         nargs="?", type=str)
     parser.add_argument('--synack', help="Usage: %(prog)s --synack <options>", nargs="?")
-
+    parser.add_argument('--networks', help="Usage: %(prog)s --networks <options>", nargs="?")
 
 if len(sys.argv) <= 1:
     add_args()
