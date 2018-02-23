@@ -55,15 +55,21 @@ parser = argparse.ArgumentParser(description=description,
 
 def add_args():
     parser.add_argument('--mitm',
-                        help="Usage: %(prog)s --mitm runtime <options>",
+                        help="Usage: %(prog)s --mitm runtime <options>\n"
+                             "Attack type: connection-oriented",
                         required=False, nargs="?", type=int)
     parser.add_argument('--slowloris',
-                        help="Usage: %(prog)s --slowloris host <options>",
+                        help="Usage: %(prog)s --slowloris host <options>\n"
+                             "Attack type: connection-oriented",
                         required=False, nargs="?", type=str)
     parser.add_argument('--badpacket', help='Usage: %(prog)s --badpacket host <options>',
                         nargs="?", type=str)
     parser.add_argument('--synack', help="Usage: %(prog)s --synack <options>", nargs="?")
-    parser.add_argument('--networks', help="Usage: %(prog)s --networks <options>", nargs="?")
+    parser.add_argument('--lanscan', help="Usage: %(prog)s --lanscan <options>", nargs="?")  # TODO
+    parser.add_argument('bss')
+    parser.add_argument('--deauth', help="Usage: %(prog)s --deauth <options>", nargs="?")  # TODO
+    parser.add_argument('--pingattack', help="Usage: %(prog)s --pingattack <options>", nargs="?")  # TODO
+    parser.add_argument('--arpsniff', help="Usage: %(prog)s --arpsniff")
 
 if len(sys.argv) <= 1:
     add_args()
@@ -120,6 +126,14 @@ def main():
                 from psak_src.exploit_modules.synack_flood import SynAckFlood
                 synack = SynAckFlood(parser)
                 synack.flood()
+        if sys.argv[1] == 'interface':
+            parser.add_argument('--interface', help='Usage %prog --interface', nargs="?")
+            try:
+                from exploit_modules.interface import Interface
+                interface = Interface(parser)
+            except ImportError:
+                from psak_src.exploit_modules.interface import Interface
+                interface = Interface(parser)
         else:
             add_args()
             parser.print_help()

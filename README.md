@@ -9,6 +9,9 @@
  simpler. The second objective is support automated pentesting.
  2. This project can be expanded by writing modules and submitting
   pull requests
+ 3. Explain each attack in the help message! This is mandatory because
+ as a beginner, advice can be hard to find. Documentation should be in
+ one place, not spread across the internet. 
   
 ### Limitations
 - In general, attacks using psak are only effective if the attacker
@@ -17,7 +20,7 @@ is on the same network as the victim
  ### PSAK Framework
 PSAK is simple to intergrate with, provided a intermediate
 understanding of software develpment and Python 3. Just fork the
-project, add you module and then submit a pull request
+project, add you module and then submit a pull request.
 
 PSAK Package  | Description
 ------------- | -------------
@@ -25,22 +28,6 @@ psak_src | holds the psak project
 exploit_modules | holds each psak exploit module package
 setup.py | psak installation file 
 
-1. All code must closely follow the Google Python style at 
-guide https://google.github.io/styleguide/pyguide.html
-2. Add a __init__.py file to python packages or they will not be added to the 
-project installation package list
-3. Specify a class for your exploit. This allows for a more dynamic system and adheres to
-the psak framework
-4. Place your module in psak_src.exploit_modules
-5. Do not add ```if __name__ == '__main__':
-    main()``` to your module. That is solely for the main module located in psak_src.psak.py
-6. In psak_src.psak add the following in terms of sudo code to append to psak's arguments
-`python3
- if sys.argv[1] == '--your-module'
-    from exploit_modules.your_packages.your_core.your_module import YourClass
-    yourObject = yourObject()
-    yourObject.main_function()
-` 
 7. Use parser.add_argument('--your-module', help='help message') to add
 a quick help message for your module
  
