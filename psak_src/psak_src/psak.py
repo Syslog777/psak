@@ -46,9 +46,9 @@ on it, the interpreter will import that module, not the one you are attempting
 to import
 
 """
-# TODO Finish pingofdeath, synack_flood, refactoring badpacket
+# TODO Finish pingofdeath, refactoring badpacket
 usage = ("%(prog)s --module_name [module args]")
-description = "%(prog)s, the Pentester's Swiss Army Knife"
+description = ("%(prog)s, the Pentester's Swiss Army Knife\n")
 parser = argparse.ArgumentParser(description=description,
                                  usage=usage)
 
@@ -71,8 +71,23 @@ def add_args():
     parser.add_argument('--pingattack', help="Usage: %(prog)s --pingattack <options>", nargs="?")  # TODO
     parser.add_argument('--arpsniff', help="Usage: %(prog)s --arpsniff")
 
+
 if len(sys.argv) <= 1:
     add_args()
+    print("#### Basic Brute-Force Connectionless Attacks ####\n"
+          "- UDP Flood\n"
+          "- ICMP Flood\n"
+          "- IGMP Flood\n"
+          "#### Complex Brute-Force Connectionless Attacks ####\n"
+          "- Smurf Attack\n"
+          "- Fraggle Attack\n"
+          "- DNS Amplification Attack\n"
+          "#### Complex Brute-Force Connection-Oriented Attacks ####\n"
+          "- DNS Flood\n"
+          "- HTTP Flood\n"
+          "- Slowloris\n"
+          "#### Complex Stealth Recon Attacks ####\n"
+          "- Man-in-the-middle attack")
     parser.print_help()
     sys.exit(1)
 

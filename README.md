@@ -5,22 +5,19 @@
 
 
 ### Project Objectives
- 1. The primary objective of psak is to make learning pentesting
- simpler. The second objective is support automated pentesting.
- 2. This project can be expanded by writing modules and submitting
-  pull requests
- 3. Explain each attack in the help message! This is mandatory because
- as a beginner, advice can be hard to find. Documentation should be in
- one place, not spread across the internet. 
+1. Make pentesting easier
+2. Make pentesting simpler
+3. Make pentesting make sense
   
 ### Limitations
-- In general, attacks using psak are only effective if the attacker
-is on the same network as the victim
+- Development time is the greatest limitation in terms of psak
  
  ### PSAK Framework
 PSAK is simple to intergrate with, provided a intermediate
 understanding of software develpment and Python 3. Just fork the
 project, add you module and then submit a pull request.
+
+> Simply study the existing code and follow the style you sense.
 
 PSAK Package  | Description
 ------------- | -------------
@@ -28,8 +25,7 @@ psak_src | holds the psak project
 exploit_modules | holds each psak exploit module package
 setup.py | psak installation file 
 
-7. Use parser.add_argument('--your-module', help='help message') to add
-a quick help message for your module
+
  
 ### Installation Instructions
 Copy and paste the following into your terminal as user root
@@ -73,35 +69,21 @@ apt autoremove
   - [Deauthentication Attack][deauth]: how to create and send 
   wireless deauthentication packets using python and scapy
 
-# Intergrations 
-### Attack types
-`
- Sync flood/ARP attack/Stealth Finish/ ICMP Ping flood/ UDP flood/
- UDP Scan/ TCP Scan/Ping of Death/ Smurf attack/ TCP land/
- UDP land/ ICMP land/ IP spoof/ Sync with Data/ SRC Sync flood/
- SRC Stealth Finish/ SRC ICMP flood/ SRC UDP flood/ Echo char gen/
- Port scan/ SRC TCP connection overflow/ SRC UDP connection overflow/
- TCPUDP connection overflow/ TCP connection overflow/
- UDP connection overflow/ TCP UDP connection overflow/Ping sweep/
- Deauthentication attack
-`
+# Network Attacks
+##### Basic Brute-Force Connectionless Attacks
+- UDP Flood
+- ICMP Flood
+- IGMP Flood
+##### Complex Brute-Force Connectionless Attacks
+- Smurf Attacks
+- Fraggle Attacks
+- DNS Amplification
+##### Basic Brute-Force Connection-Oriented Attacks
+- TCP-SYN Flood
+- TCP-RST Attack
+- TCP-PSH+ACK Attack
 
-### TODO Tool intergration list
-
-> Some of the tools that PSAK will implement will come from broken repositories. Before each tool is added, a stable fork of each individual tool will be required.
-The majority of revisions will involve simple code such as updating shebangs and octal notation (Python).
-  - [DHCPTakeover][dhcpTake]: a python module that sets up a dhcp server using Scapy
-  - [MitmAP][mitmAP]: a python program to create a fake AP and sniff data
-  - [SSH-mitm][sshMitm] SSH man-in-the-middle tool 
-  - [TLS Prober][tlsprober]: a toolfor identifying the implementation in use by SSL/TLS servers
-  - [Tplmap][tplMap]: exploit Code Injection and Server-Side Template Injection vulnerabilities
-  - [WAFW00F][waf]: identifies and fingerprints Web Application Firewall (WAF) products.
-  - [Finmap][finmap]: find, prepare, audit, exploit and even google automatically for local and remote file inclusion bugs within webapps in python
-  - [NoSQLMap][NoSql]: audit as well as automate injection attacks while exploiting default configuration weaknesses in NoSQL databases and web applications using NoSQL
-  - [Webscreenshot][webscrnshot]: A simple script to screenshot a list of websites, based on the url-to-image phantomjs script.
-  - [Slowloris][slowloris]: an HTTP Denial of Service attack that affects threaded servers (Completed)
-  - [DHCP-Starvation][DHCP-starvation]: DHCP starvation attack 
-  
+#### External Sources  
 
 ##### Project payload list
 > A list of frameworks to use to design deliverable payloads for penetration testers. 

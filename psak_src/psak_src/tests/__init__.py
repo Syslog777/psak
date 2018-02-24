@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
  Copyright (c) 2017, Syslog777
  
@@ -28,43 +27,3 @@
  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-"""
-This class will support interface actions such as
-turning promiscuous mode on and off
-"""
-
-import os
-import sys
-
-class Interface:
-    def __init__(self, parser):
-        parser.add_argument('-p', action='store_false',
-                            dest="promiscious", help="Turn promiscious mode on")
-        parser.add_argument('-m', action='store_false',
-                            dest="list_macs", help="Generates a list of macs on from the machine")
-        parser.add_argument('-nd', action='store_false',
-                            dest="list_ip", help="Displays ip in range definded by user."
-                                                 " Range must be either 8, 16 or 24")
-        parser.add_argument('-list_all')
-
-        try:
-            self.args = parser.parse_args()
-        except BaseException:
-            parser.print_help()
-            sys.exit(1)
-
-
-    def promisc_off(self):
-        os.system("ip link set {} promisc off".format(self.interface))
-
-    def promisc_on(self):
-        os.system("ip link set {} promisc on".format(self.interface))
-
-    def list_mac(self):
-        os.system("ip a | grep link/ether")
-
-    def list_ip(self):
-        os.system("netdiscover -r 0.0.0.0/{}".format(self.range))
-
-    def all_interface(self):
-        os.system("ip a")
