@@ -38,6 +38,7 @@ apt-get install python3-pip
 apt-get install pip
 apt-get install pip3
 pip3 install --upgrade pip
+pip install --upgrade google-api-python-client
 pip3 install setuptools
 pip3 install ipython
 pip3 install graphviz
@@ -49,6 +50,7 @@ pip3 install pyx
 pip3 install latex
 pip3 install docopt
 pip3 install netaddr
+pip3 install requests
 apt-get install tcpdump python3-crypto ipython3
 apt-get install python3-tk
 #Basic penetration utils
