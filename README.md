@@ -81,11 +81,9 @@ apt autoremove
 - Fraggle Attacks
 - DNS Amplification
 ##### Basic Brute-Force Connection-Oriented Attacks
-- TCP-SYN Flood
+- TCP-SYN Flood (Complete)
 - TCP-RST Attack
 - TCP-PSH+ACK Attack
-
-#### External Sources  
 
 ##### Project payload list
 > A list of frameworks to use to design deliverable payloads for penetration testers. 

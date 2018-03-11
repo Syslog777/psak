@@ -46,8 +46,7 @@ on it, the interpreter will import that module, not the one you are attempting
 to import
 
 """
-# TODO Finish pingofdeath, refactoring badpacket
-usage = ("%(prog)s --module_name [module args]")
+usage = ("%(prog)s --module_name --help")
 description = ("%(prog)s, the Pentester's Swiss Army Knife\n")
 parser = argparse.ArgumentParser(description=description,
                                  usage=usage)
@@ -62,15 +61,10 @@ def add_args():
                         help="Usage: %(prog)s --slowloris host <options>\n"
                              "Attack type: connection-oriented",
                         required=False, nargs="?", type=str)
-    parser.add_argument('--badpacket', help='Usage: %(prog)s --badpacket host <options>',
-                        nargs="?", type=str)
-    parser.add_argument('--synack', help="Usage: %(prog)s --synack <options>", nargs="?")
-    parser.add_argument('--lanscan', help="Usage: %(prog)s --lanscan <options>", nargs="?")  # TODO
-    parser.add_argument('bss')
-    parser.add_argument('--deauth', help="Usage: %(prog)s --deauth <options>", nargs="?")  # TODO
-    parser.add_argument('--pingattack', help="Usage: %(prog)s --pingattack <options>", nargs="?")  # TODO
-    parser.add_argument('--arpsniff', help="Usage: %(prog)s --arpsniff")
-
+    parser.add_argument('--synack', help="Usage: %(prog)s --synack <options>\n"
+                                         " Attack type: conncetion-oriented", nargs="?")
+    parser.add_argument('--interface', help="Usage: %(prog)s --interface <options>", nargs="?")
+    parser.add_argument('--list', help="Usage: %(prog)s --list <options>", nargs="?")
 
 if len(sys.argv) <= 1:
     add_args()
@@ -87,7 +81,7 @@ if len(sys.argv) <= 1:
           "- HTTP Flood\n"
           "- Slowloris\n"
           "#### Complex Stealth Recon Attacks ####\n"
-          "- Man-in-the-middle attack")
+          "- Man-in-the-middle attack\n")
     parser.print_help()
     sys.exit(1)
 
@@ -122,17 +116,9 @@ def main():
                 from psak_src.exploit_modules.slowloris import SlowLoris
             slowloris = SlowLoris(parser)
             slowloris.poisen()
-        if sys.argv[1] == '--badpacket':
-            parser.add_argument('--badpacket', help='Usage: %(prog)s --badpacket host',
-                                nargs="?")
-            try:
-                from exploit_modules.packet_attacks.badpacket import BadPacket
-            except ImportError:
-                from psak_src.exploit_modules.packet_attacks.badpacket import BadPacket
-            bad_packet = BadPacket(parser)
-            bad_packet.send()
         if sys.argv[1] == '--synack':
-            parser.add_argument('--synack', help='Usage %(prog)s --synack ipaddress', nargs="?")
+            parser.add_argument('--synack', help='Usage %(prog)s --synack ipaddress',
+                                required=False, nargs="?")
             try:
                 from exploit_modules.synack_flood import SynAckFlood
                 synack = SynAckFlood(parser)
@@ -141,14 +127,22 @@ def main():
                 from psak_src.exploit_modules.synack_flood import SynAckFlood
                 synack = SynAckFlood(parser)
                 synack.flood()
-        if sys.argv[1] == 'interface':
-            parser.add_argument('--interface', help='Usage %prog --interface', nargs="?")
+        if sys.argv[1] == '--interface':
+            parser.add_argument("--interface", required=False, nargs="?",
+                                help='Usage %(prog)s --interface interface')
             try:
                 from exploit_modules.interface import Interface
-                interface = Interface(parser)
             except ImportError:
                 from psak_src.exploit_modules.interface import Interface
-                interface = Interface(parser)
+            interface = Interface(parser)
+            interface.interface()
+        if sys.argv[1] == '--list':
+            parser.add_argument("--list", required=False, nargs="?",
+                                help='Usage %(prog)s --list --macs')
+        try:
+            from exploit_modules.list import List
+        except ImportError:
+            from psak_src.exploit_modules.list import List
         else:
             add_args()
             parser.print_help()
