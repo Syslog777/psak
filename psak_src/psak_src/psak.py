@@ -64,7 +64,8 @@ def add_args():
     parser.add_argument('--synack', help="Usage: %(prog)s --synack <options>\n"
                                          " Attack type: conncetion-oriented", nargs="?")
     parser.add_argument('--interface', help="Usage: %(prog)s --interface <options>", nargs="?")
-    parser.add_argument('--list', help="Usage: %(prog)s --list <options>", nargs="?")
+    parser.add_argument('--ninfo', help="Usage: %(prog)s --ninfo <options>", nargs="?")
+
 
 if len(sys.argv) <= 1:
     add_args()
@@ -106,6 +107,7 @@ def main():
                 from psak_src.exploit_modules.mitm import Mitm
             mitm = Mitm(parser)
             mitm.connect()
+
         if sys.argv[1] == '--slowloris':
             parser.add_argument('--slowloris',
                                 help='Usage: %(prog)s --slowloris host',
@@ -116,6 +118,7 @@ def main():
                 from psak_src.exploit_modules.slowloris import SlowLoris
             slowloris = SlowLoris(parser)
             slowloris.poisen()
+
         if sys.argv[1] == '--synack':
             parser.add_argument('--synack', help='Usage %(prog)s --synack ipaddress',
                                 required=False, nargs="?")
@@ -127,6 +130,7 @@ def main():
                 from psak_src.exploit_modules.synack_flood import SynAckFlood
                 synack = SynAckFlood(parser)
                 synack.flood()
+
         if sys.argv[1] == '--interface':
             parser.add_argument("--interface", required=False, nargs="?",
                                 help='Usage %(prog)s --interface interface')
@@ -136,17 +140,24 @@ def main():
                 from psak_src.exploit_modules.interface import Interface
             interface = Interface(parser)
             interface.interface()
-        if sys.argv[1] == '--list':
-            parser.add_argument("--list", required=False, nargs="?",
-                                help='Usage %(prog)s --list --macs')
-        try:
-            from exploit_modules.list import List
-        except ImportError:
-            from psak_src.exploit_modules.list import List
+
+        if sys.argv[1] == '--ninfo':
+            parser.add_argument("--ninfo", required=False, nargs="?",
+                                help='Usage %(prog)s --list --macs\n'
+                                     'Network info')
+            try:
+                from exploit_modules.internal_utils.ninfo import NInfo
+                ninfo = NInfo(parser)
+                ninfo.main()
+            except ImportError:
+                from psak_src.exploit_modules.internal_utils.ninfo import NInfo
+                ninfo = NInfo(parser)
+                ninfo.main()
         else:
             add_args()
             parser.print_help()
             sys.exit(1)
+
     except IOError as e:
         if e[0] == errno.EPERM:
             print(sys.stderr, ("\nYou need root permissions to do this,"
