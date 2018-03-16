@@ -72,6 +72,8 @@ apt autoremove
   wireless deauthentication packets using python and scapy
 
 # Network Attacks
+If the feature has not been marked completed, you can contribute
+by writing an implementation of it by attack type
 ##### Basic Brute-Force Connectionless Attacks
 - UDP Flood
 - ICMP Flood
