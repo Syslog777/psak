@@ -8,6 +8,9 @@
 1. Make pentesting easier
 2. Make pentesting simpler
 3. Make pentesting make sense
+
+### Contribute
+Write a TCP-RST Attack using scapy
   
 ### Limitations
 - Development time is the greatest limitation in terms of psak
