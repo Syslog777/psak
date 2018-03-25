@@ -46,11 +46,12 @@ on it, the interpreter will import that module, not the one you are attempting
 to import
 
 """
-usage = ("%(prog)s --module_name --help")
+usage = ("%(prog)s --module_name --help\n"
+         "Host should generally be in IP address form\n"
+         "Ex. 192.168.2.1")
 description = ("%(prog)s, the Pentester's Swiss Army Knife\n")
 parser = argparse.ArgumentParser(description=description,
                                  usage=usage)
-
 
 def add_args():
     parser.add_argument('--mitm',
@@ -62,14 +63,19 @@ def add_args():
                              "Attack type: connection-oriented",
                         required=False, nargs="?", type=str)
     parser.add_argument('--synack', help="Usage: %(prog)s --synack <options>\n"
-                                         " Attack type: conncetion-oriented", nargs="?")
+                                         " Attack type: connection-oriented", nargs="?")
     parser.add_argument('--interface', help="Usage: %(prog)s --interface <options>", nargs="?")
     parser.add_argument('--ninfo', help="Usage: %(prog)s --ninfo <options>", nargs="?")
-
+    parser.add_argument('--ping', help="Usage: %(prog)s --ping <options>\n"
+                                       " Attack type: connection-less\n"
+                                       " The ping command for psak is written from scratch.\n"
+                                       " This is because the native ping command does not"
+                                       " let the user spoof the source address.")
 
 if len(sys.argv) <= 1:
     add_args()
-    print("""Copyright (c) 2018, Syslog777
+    print("""
+ Copyright (c) 2018, Syslog777
  
  All rights reserved.
  
@@ -99,7 +105,7 @@ if len(sys.argv) <= 1:
 """"")
     print("#### Basic Brute-Force Connectionless Attacks ####\n"
           "- UDP Flood\n"
-          "- ICMP Flood\n"
+          "- ICMP Flood (Completed)\n"
           "- IGMP Flood\n"
           "#### Complex Brute-Force Connectionless Attacks ####\n"
           "- Smurf Attack\n"
@@ -108,7 +114,7 @@ if len(sys.argv) <= 1:
           "#### Complex Brute-Force Connection-Oriented Attacks ####\n"
           "- DNS Flood\n"
           "- HTTP Flood\n"
-          "- Slowloris\n"
+          "- Slowloris (Completed)\n"
           "#### Complex Stealth Recon Attacks ####\n"
           "- Man-in-the-middle attack\n")
     parser.print_help()
@@ -174,13 +180,26 @@ def main():
                                 help='Usage %(prog)s --list --macs\n'
                                      'Network info')
             try:
-                from exploit_modules.internal_utils.ninfo import NInfo
+                from exploit_modules.ninfo import NInfo
                 ninfo = NInfo(parser)
                 ninfo.main()
             except ImportError:
-                from psak_src.exploit_modules.internal_utils.ninfo import NInfo
+                from psak_src.exploit_modules.ninfo import NInfo
                 ninfo = NInfo(parser)
                 ninfo.main()
+
+        if sys.argv[1] == '--ping':
+            parser.add_argument("--ping", required=False, nargs="?",
+                                help='Usage %(prog)s --ping destination\n')
+            try:
+                from exploit_modules.ping import Ping
+                ping = Ping(parser)
+                ping.execute()
+            except ImportError:
+                from psak_src.exploit_modules.ping import Ping
+                ping = Ping(parser)
+                ping.execute()
+
         else:
             add_args()
             parser.print_help()
